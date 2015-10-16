@@ -9,10 +9,11 @@
  */
 package info.ata4.unity.asset;
 
-import info.ata4.io.DataReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import info.ata4.io.DataReader;
 
 /**
  *

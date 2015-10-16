@@ -9,12 +9,13 @@
  */
 package info.ata4.unity.asset;
 
+import java.io.IOException;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
 import info.ata4.io.DataReader;
 import info.ata4.io.DataWriter;
 import info.ata4.unity.util.UnityStruct;
-import java.io.IOException;
-import java.util.Objects;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Class for objects that contain the runtime type of a single field.

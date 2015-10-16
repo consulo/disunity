@@ -9,6 +9,22 @@
  */
 package info.ata4.unity.asset;
 
+import static java.nio.file.StandardOpenOption.READ;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.io.FilenameUtils;
 import info.ata4.io.DataReader;
 import info.ata4.io.DataReaders;
 import info.ata4.io.DataWriter;
@@ -19,20 +35,6 @@ import info.ata4.unity.rtti.ObjectData;
 import info.ata4.unity.rtti.ObjectSerializer;
 import info.ata4.unity.util.TypeTreeUtils;
 import info.ata4.util.io.DataBlock;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import static java.nio.file.StandardOpenOption.READ;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FilenameUtils;
 
 
 /**
@@ -191,8 +193,8 @@ public class AssetFile extends FileHandler {
         objectInfoBlock.markEnd(in);
         L.log(Level.FINER, "objectInfoBlock: {0}", objectInfoBlock);
         
-        // unknown block for Unity 5
-        if (header.version() > 13) {
+        // unknown block for Unity 5 - at 15 version they moved to object info table
+        if (header.version() == 13 || header.version() == 14) {
             in.align(4);
             int num = in.readInt();
             for (int i = 0; i < num; i++) {

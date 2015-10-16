@@ -9,11 +9,12 @@
  */
 package info.ata4.unity.asset;
 
+import java.io.IOException;
+import java.util.Map;
+
 import info.ata4.io.DataReader;
 import info.ata4.io.DataWriter;
 import info.ata4.unity.util.UnityStruct;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  *

@@ -9,11 +9,12 @@
  */
 package info.ata4.unity.asset;
 
+import java.io.IOException;
+
 import info.ata4.io.DataReader;
 import info.ata4.io.DataWriter;
 import info.ata4.unity.util.UnityClass;
 import info.ata4.unity.util.UnityStruct;
-import java.io.IOException;
 
 /**
  * 
@@ -36,7 +37,8 @@ public class ObjectInfo extends UnityStruct {
     
     // set to 1 if destroyed object instances are stored?
     private short isDestroyed;
-    
+
+
     public ObjectInfo(VersionInfo versionInfo) {
         super(versionInfo);
     }
@@ -48,6 +50,25 @@ public class ObjectInfo extends UnityStruct {
         typeID = in.readInt();
         classID = in.readShort();
         isDestroyed = in.readShort();
+		if(versionInfo.assetVersion() > 14)
+        {
+			boolean readNext = in.readBoolean();
+            if(readNext)
+            {
+                int sizeOfNextData = in.readInt();
+				in.align(4);
+                for(int j = 0; j < sizeOfNextData; j++)
+                {
+                    in.readInt();
+                    in.readInt();
+                    in.readInt();
+                }
+            }
+			else
+			{
+				in.align(4);
+			}
+        }
 
         assert typeID == classID || (classID == 114 && typeID < 0);
     }
